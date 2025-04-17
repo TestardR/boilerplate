@@ -1,0 +1,10 @@
+package httpv1
+
+import (
+	"time"
+)
+
+type Config struct {
+	Address string        `envconfig:"HTTP_ADDRESS" default:"localhost:8888"`
+	Timeout time.Duration `envconfig:"HTTP_TIMEOUT" default:"10s"`
+}

@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    command: [ "postgres", "-c", "log_statement=all" ]
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "test"
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready",  "-U", "user", "-d", "test"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+
+  postgres_migration:
+    image: migrate/migrate
+    volumes:
+      - ./../db/migrations:/migrations
+    depends_on:
+      postgres:
+        condition: service_healthy
+    entrypoint:
+      - /usr/bin/migrate
+      - -path
+      - /migrations/
+      - -database
+      - postgres://postgres:5432/test?sslmode=disable&user=user&password=password
+      - up
