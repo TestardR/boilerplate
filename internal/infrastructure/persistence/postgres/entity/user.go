@@ -9,7 +9,7 @@ import (
 )
 
 type User struct {
-	ID        uuid.UUID `db:"user_id"`
+	ID        uuid.UUID `db:"id"`
 	Username  string    `db:"username"`
 	UpdatedAt time.Time `db:"updated_at"`
 }

@@ -23,14 +23,13 @@ func NewUserStore(db *sqlx.DB) UserStore {
 
 func (s UserStore) Load(ctx context.Context, id user.ID) (user.User, error) {
 	var userEntity entity.User
-
 	err := s.db.GetContext(ctx, &userEntity,
 		`SELECT 
 			id, 
 			username, 
 			updated_at 
 		FROM users 
-		WHERE user_id = $1`,
+		WHERE id = $1`,
 		id.ID(),
 	)
 	if err != nil && errors.Is(err, sql.ErrNoRows) {
@@ -55,7 +54,7 @@ func (s UserStore) Persist(ctx context.Context, userModel user.User) error {
 			$2, 
 			$3
 		)`,
-		userModel.ID(),
+		userModel.ID().ID(),
 		userModel.Username(),
 		userModel.UpdatedAt(),
 	)

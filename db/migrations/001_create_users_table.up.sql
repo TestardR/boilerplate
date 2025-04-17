@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS users(
-   user_id UUID PRIMARY KEY,
+   id UUID PRIMARY KEY,
    username VARCHAR (50) NOT NULL,
    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

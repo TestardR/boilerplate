@@ -50,7 +50,7 @@ func main() {
 		logger.ErrorContext(ctx, "failed to create migrator", "error", err)
 		os.Exit(1)
 	}
-	defer migration.Close()
+	defer migration.Close() //nolint:staticcheck
 
 	if err := migration.Up(); err != nil && !errors.Is(err, migrate.ErrNoChange) {
 		logger.ErrorContext(ctx, "failed to run migrations", "error", err)

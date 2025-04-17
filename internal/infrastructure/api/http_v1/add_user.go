@@ -59,5 +59,5 @@ func (h Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
-	_, _ = w.Write(data)
+	_, _ = w.Write(data) //nolint:errcheck
 }
