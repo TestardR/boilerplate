@@ -15,6 +15,10 @@ import (
 	httpv1 "boilerplate/internal/infrastructure/api/http_v1"
 	"boilerplate/internal/infrastructure/persistence/postgres"
 	"boilerplate/internal/infrastructure/system"
+
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
 func main() {
@@ -38,6 +42,18 @@ func main() {
 	postgresClient, err := postgres.NewClient(cfg.Postgres)
 	if err != nil {
 		logger.ErrorContext(ctx, "failed to create postgres client", "error", err)
+		os.Exit(1)
+	}
+
+	migration, err := migrate.New(cfg.Postgres.SourceURL(), cfg.Postgres.DBURL())
+	if err != nil {
+		logger.ErrorContext(ctx, "failed to create migrator", "error", err)
+		os.Exit(1)
+	}
+	defer migration.Close()
+
+	if err := migration.Up(); err != nil && !errors.Is(err, migrate.ErrNoChange) {
+		logger.ErrorContext(ctx, "failed to run migrations", "error", err)
 		os.Exit(1)
 	}
 

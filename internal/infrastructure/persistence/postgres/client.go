@@ -14,7 +14,7 @@ type Client struct {
 
 func NewClient(config Config) (Client, error) {
 	dsn := fmt.Sprintf(
-		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%t",
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
 		config.Host,
 		config.Port,
 		config.User,

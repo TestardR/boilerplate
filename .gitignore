@@ -2,4 +2,4 @@
 artifacts
 .vscode
 .tool-versions
-int_coverage.out
+unit_coverage.out
