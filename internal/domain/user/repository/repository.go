@@ -6,6 +6,8 @@ import (
 	user "boilerplate/internal/domain/user/model"
 )
 
+//go:generate go tool go.uber.org/mock/mockgen -source=repository.go -destination=../../../application/mock/user_repository.go -package=mock
+
 type Persister interface {
 	Persist(ctx context.Context, userModel user.User) error
 }

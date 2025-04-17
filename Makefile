@@ -25,6 +25,9 @@ dockerise:
 lint:
 	go run github.com/golangci/golangci-lint/cmd/golangci-lint@$(GOLANGCI_LINT_VERSION) run --allow-parallel-runners
 
+.PHONY: mockgen
+mockgen:
+	go generate ./...
 
 .PHONY: unit_test
 unit_test:
