@@ -1,11 +1,12 @@
 package integration
 
 import (
+	"time"
+
 	"boilerplate/internal/domain/shared"
 	"boilerplate/internal/domain/user/model"
 	"boilerplate/internal/infrastructure/persistence/postgres"
-	testshared "boilerplate/test-shared"
-	"time"
+	testshared "boilerplate/test_shared"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"

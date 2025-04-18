@@ -20,7 +20,7 @@ import (
 	"boilerplate/internal/domain/user/model"
 	"boilerplate/internal/infrastructure/api/http_v1/mock"
 	"boilerplate/internal/infrastructure/api/www"
-	testshared "boilerplate/test-shared"
+	testshared "boilerplate/test_shared"
 )
 
 func TestHandlerGetUser(t *testing.T) {
@@ -61,14 +61,6 @@ func TestHandlerGetUser(t *testing.T) {
 			},
 			expectedStatus: http.StatusOK,
 			expectedBody:   fmt.Sprintf(`{"id":"%s","username":"%s"}`, userID.ID().String(), username),
-		},
-		{
-			name:           "invalid content type",
-			userIDParam:    userID.ID().String(),
-			contentType:    "text/plain",
-			expect:         func(mockUserService *mock.MockUserService) {},
-			expectedStatus: http.StatusUnsupportedMediaType,
-			expectedBody:   "Content-Type must be application/json\n",
 		},
 		{
 			name:           "invalid uuid",

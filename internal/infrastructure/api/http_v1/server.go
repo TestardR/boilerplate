@@ -21,20 +21,16 @@ func NewHttServer(
 	})
 
 	mux.HandleFunc("/users", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost {
+		switch r.Method {
+		case http.MethodPost:
+			handler.CreateUser(w, r)
+		case http.MethodGet:
+			handler.GetUser(w, r)
+		default:
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		}
-
-		handler.CreateUser(w, r)
 	})
 
-	mux.HandleFunc("/users/{id}", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		}
-
-		handler.GetUser(w, r)
-	})
 	return &http.Server{
 		Addr:         config.Address,
 		ReadTimeout:  config.Timeout,

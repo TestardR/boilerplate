@@ -29,10 +29,22 @@ lint:
 mockgen:
 	go generate ./...
 
+.PHONY: local-run
+local-run:
+	$(ARTIFACTS_DIR)/svc
+
+.PHONE: local-compose-start
+	docker compose -f docker-composition/postgres.yml up \
+		--build \
+		--detach
+
+.PHONY: local-compose-stop
+	docker compose -f docker-composition/postgres.yml down \
+		--remove-orphans
+
 .PHONY: unit_test
 unit_test:
 	go test -parallel 6 -race -count=1 -coverpkg=./... -coverprofile=unit_coverage.out -v `go list ./... | grep -v /test/`
-
 
 .PHONY: integration_test
 integration_test:

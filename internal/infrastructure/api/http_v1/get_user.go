@@ -14,11 +14,6 @@ import (
 )
 
 func (h Handler) GetUser(w http.ResponseWriter, r *http.Request) {
-	if contentType := r.Header.Get("Content-Type"); contentType != "application/json" {
-		http.Error(w, "Content-Type must be application/json", http.StatusUnsupportedMediaType)
-		return
-	}
-
 	userID, err := uuid.Parse(r.URL.Query().Get("id"))
 	if err != nil {
 		http.Error(w, "Invalid id", http.StatusBadRequest)

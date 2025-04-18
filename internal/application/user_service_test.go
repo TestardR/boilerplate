@@ -10,7 +10,7 @@ import (
 	"boilerplate/internal/application/mock"
 	"boilerplate/internal/application/query"
 	"boilerplate/internal/domain/user/model"
-	testshared "boilerplate/test-shared"
+	testshared "boilerplate/test_shared"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
